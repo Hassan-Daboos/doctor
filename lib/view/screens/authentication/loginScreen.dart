@@ -42,11 +42,11 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 15,
                         ),
-                        SvgPicture.asset(
-                          'assets/images/Logo.svg',
-                          semanticsLabel: ' Logo',
-                          height: MediaQuery.of(context).size.height / 20.0,
-                        ),
+                        // SvgPicture.asset(
+                        //   'assets/images/Logo.svg',
+                        //   semanticsLabel: ' Logo',
+                        //   height: MediaQuery.of(context).size.height / 20.0,
+                        // ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 20,
                         ),
@@ -57,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                         CustomText(
                           text: 'Login',
                           fontSize: 20,
-                          color: BlackArrowBack,
+                          color: textcolor,
                           fontWeight: FontWeight.w600,
                         ),
                         SizedBox(
@@ -65,15 +65,15 @@ class LoginScreen extends StatelessWidget {
                         ),
                         TextFormFieldsCustom(
                           controller: emailController,
-                          hintText: "E-mail",
-                          keyboardType: TextInputType.emailAddress,
+                          hintText: "Phone Number",
+                          keyboardType: TextInputType.phone,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
                             if (value!.trim().isEmpty) {
-                              return "Email must be not Empty";
+                              return "Phone must be not Empty";
                             } else if (RegExp(validatorEmail)
                                 .hasMatch(value.trim())) {
-                              return "Email is not Valid";
+                              return "Phone is not Valid";
                             }
                             return null;
                           },
@@ -123,7 +123,7 @@ class LoginScreen extends StatelessWidget {
                             child: const Text(
                               'Forgot Password?',
                               style: TextStyle(
-                                  color: orange,
+                                  color: maincolor,
                                   decoration: TextDecoration.underline,
                                   fontSize: 12),
                             ),
@@ -146,12 +146,15 @@ class LoginScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            buttonColor: orange,
+                            buttonColor: maincolor,
                             borderRadius: 7,
                             onPressed: () {
-                              if (formKey.currentState!.validate()) {
-                                print("objectvald");
-                              }
+                              Navigator.of(context)
+                                  .pushNamedAndRemoveUntil('LayoutScreen', (Route<dynamic> route) => false);
+
+                              // if (formKey.currentState!.validate()) {
+                              //   print("objectvald");
+                              // }
                             },
                           ),
                         ),
@@ -168,11 +171,14 @@ class LoginScreen extends StatelessWidget {
                               children: <TextSpan>[
                                 const TextSpan(
                                   text: "Don't Have an account? ",
+                                  style: TextStyle(
+                                    color: textcolor
+                                  )
                                 ),
                                 TextSpan(
                                     text: 'Sign Up',
                                     style: TextStyle(
-                                      color: orange,
+                                      color: maincolor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,
                                     ),

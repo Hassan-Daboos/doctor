@@ -10,14 +10,26 @@ import '../../component/app_component/custom_text.dart';
 import '../../component/app_component/custom_text_form_filed.dart';
 import '../../component/app_component/maxtextcolor.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   SignupScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
   var formKey = GlobalKey<FormState>();
+
   TextEditingController emailController = TextEditingController();
+
   TextEditingController fullNameController = TextEditingController();
+
   TextEditingController phoneController = TextEditingController();
+
   TextEditingController addressController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
+
   bool? value = false;
 
   @override
@@ -57,26 +69,44 @@ class SignupScreen extends StatelessWidget {
                                 CustomText(
                                   text: "Sign Up",
                                   fontSize: 20,
-                                  color: BlackArrowBack,
+                                  color: textcolor,
                                   fontWeight: FontWeight.w600,
                                 ),
                                 SizedBox(
                                   height: MediaQuery.of(context).size.height / 20,
                                 ),
-                                TextFormFieldsCustom(
-                                  controller: fullNameController,
-                                  hintText: "Full Name",
-                                  keyboardType: TextInputType.text,
-                                  textInputAction: TextInputAction.next,
-                                  validator: (value) {
-                                    if (value!.trim().isEmpty) {
-                                      return "Full Name must be not Empty";
-                                    }
-                                    return null;
-                                  },
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 5),
+                                  child: TextFormFieldsCustom(
+                                    controller: fullNameController,
+                                    hintText: "Full Name",
+                                    keyboardType: TextInputType.text,
+                                    textInputAction: TextInputAction.next,
+                                    validator: (value) {
+                                      if (value!.trim().isEmpty) {
+                                        return "Full Name must be not Empty";
+                                      }
+                                      return null;
+                                    },
+                                  ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  padding: const EdgeInsets.symmetric(vertical: 5),
+                                  child: TextFormFieldsCustom(
+                                    controller: phoneController,
+                                    hintText: "Phone number",
+                                    keyboardType: TextInputType.phone,
+                                    textInputAction: TextInputAction.next,
+                                    validator: (value) {
+                                      if (value!.trim().isEmpty) {
+                                        return "Phone number must be not Empty";
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 5),
                                   child: TextFormFieldsCustom(
                                     controller: emailController,
                                     hintText: "E-mail",
@@ -94,7 +124,7 @@ class SignupScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  padding: const EdgeInsets.symmetric(vertical: 5),
                                   child: TextFormFieldsCustom(
                                     controller: passwordController,
                                     hintText: "Password",
@@ -132,49 +162,21 @@ class SignupScreen extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
-                                  child: TextFormFieldsCustom(
-                                    controller: phoneController,
-                                    hintText: "Phone number",
-                                    keyboardType: TextInputType.phone,
-                                    textInputAction: TextInputAction.next,
-                                    validator: (value) {
-                                      if (value!.trim().isEmpty) {
-                                        return "Phone number must be not Empty";
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
-                                  child: TextFormFieldsCustom(
-                                    controller: addressController,
-                                    hintText: "Address",
-                                    keyboardType: TextInputType.streetAddress,
-                                    textInputAction: TextInputAction.next,
-                                    validator: (value) {
-                                      if (value!.trim().isEmpty) {
-                                        return "Address must be not Empty";
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ),
+
                                 Row(
                                   children: <Widget>[
                                     /** Checkbox Widget **/
                                     Checkbox(
+                                      activeColor: maincolor,
                                       value: this.value,
                                       onChanged: (bool? value) {
                                         this.value = value;
-                                        // setState(() {
-                                        //   this.value = value;
-                                        // });
+                                        setState(() {
+                                          this.value = value;
+                                        });
                                       },
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ), //SizedBox
                                     RichText(
@@ -186,11 +188,14 @@ class SignupScreen extends StatelessWidget {
                                         children: <TextSpan>[
                                           const TextSpan(
                                             text: "Do you agree to our  ",
+                                            style: TextStyle(
+                                              color: textcolor
+                                            )
                                           ),
                                           TextSpan(
                                               text: "Privacy Policy",
                                               style: TextStyle(
-                                                color: orange,
+                                                color: maincolor,
                                                 fontWeight: FontWeight.bold,
                                                 decoration: TextDecoration.underline,
                                                 fontSize: 14,
@@ -225,7 +230,7 @@ class SignupScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                    buttonColor: orange,
+                                    buttonColor: maincolor,
                                     borderRadius: 7,
                                     onPressed: () {
                                       if (formKey.currentState!.validate()) {
@@ -246,14 +251,17 @@ class SignupScreen extends StatelessWidget {
                                       ),
                                       children: <TextSpan>[
                                         const TextSpan(
-                                          text: "Already Have an Account? ",
+                                          text: "Already Have an Account?  ",
+                                          style: TextStyle(
+                                            color: textcolor
+                                          )
                                         ),
                                         TextSpan(
                                             text: "Login",
                                             style: TextStyle(
-                                              color: orange,
+                                              color: maincolor,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 14,
+                                              fontSize: 16,
                                             ),
                                             recognizer: TapGestureRecognizer()
                                               ..onTap = () {

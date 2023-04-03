@@ -12,23 +12,33 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [
-          Color(0xff69D7C4),
-          Color(0xff36A693),
-        ], begin: Alignment.bottomLeft, end: Alignment.topRight)
-      ),
-      child: AnimatedSplashScreen(
-        duration: 5000,
-        splashIconSize: double.infinity,
-        backgroundColor: Colors.transparent,
-        centered: true,
-        splashTransition: SplashTransition.fadeTransition,
-         pageTransitionType: PageTransitionType.leftToRight,
-        splash: SvgPicture.asset("$logoSplashSvg"),
-        nextScreen: OnBoardScreen(),
-      ),
+    return AnimatedSplashScreen(
+      duration: 5000,
+      splashIconSize: double.infinity,
+      backgroundColor: Colors.white,
+      centered: true,
+      splashTransition: SplashTransition.fadeTransition,
+      pageTransitionType: PageTransitionType.leftToRight,
+      splash: Image.asset("$logoSplashSvg"),
+      nextScreen: OnBoardScreen(),
     );
+    // return Container(
+    //   decoration: BoxDecoration(
+    //     gradient: LinearGradient(colors: [
+    //       Color(0xff69D7C4),
+    //       Color(0xff36A693),
+    //     ], begin: Alignment.bottomLeft, end: Alignment.topRight)
+    //   ),
+    //   child: AnimatedSplashScreen(
+    //     duration: 5000,
+    //     splashIconSize: double.infinity,
+    //     backgroundColor: Colors.white,
+    //     centered: true,
+    //     splashTransition: SplashTransition.fadeTransition,
+    //      pageTransitionType: PageTransitionType.leftToRight,
+    //     splash: Image.asset("$logoSplashSvg"),
+    //     nextScreen: OnBoardScreen(),
+    //   ),
+    // );
   }
 }

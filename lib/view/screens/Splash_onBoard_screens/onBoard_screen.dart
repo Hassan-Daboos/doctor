@@ -44,7 +44,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                             height: 60.h,
                           ),
                           SvgPicture.asset(
-                            '$illustration1',
+                            '$illustration0',
                             width: 332.32.w,
                             height: 209.5.h,
                           ),

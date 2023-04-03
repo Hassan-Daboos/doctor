@@ -48,7 +48,9 @@ dependencies:
   fluttertoast:
   flutter_screenutil: ^5.7.0
   smooth_page_indicator: ^1.0.1
-  #  State_Mangment
+  convex_bottom_bar: ^3.2.0
+  timeline_list: ^0.0.6
+# State_Mangment
   bloc:
   flutter_bloc:
   shared_preferences:

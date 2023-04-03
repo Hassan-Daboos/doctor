@@ -1,14 +1,24 @@
+import 'package:bloc/bloc.dart';
 import 'package:doctor/view/screens/Splash_onBoard_screens/SplashScreen.dart';
 import 'package:doctor/view/screens/authentication/PrivacyPolicyScreen.dart';
 import 'package:doctor/view/screens/authentication/loginScreen.dart';
 import 'package:doctor/view/screens/authentication/signupscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'constant/NavigationService.dart';
+import 'constant/observer.dart';
+import 'view/screens/layouthome/layoutScreen.dart';
+import 'viewmodel/cubit/layout_cubit/layout_cubit.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await SharedHelper.init();
+  // await DioHelper.init();
+  Bloc.observer = MyBlocObserver();
+
   runApp(const MyApp());
 }
 
@@ -23,25 +33,30 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          navigatorKey: NavigationService.instance.navigationKey,
-          routes: {
-            "LoginScreen": (BuildContext context) =>  LoginScreen(),
-            "SignupScreen": (BuildContext context) =>  SignupScreen(),
-            "PrivacyPolicyScreen": (BuildContext context) =>  PrivacyPolicyScreen(),
-          },
-          title: 'Student ODC',
-          theme: ThemeData(
-            textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
-            primarySwatch: Colors.blue,
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => LayoutCubit()),
+          ],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            navigatorKey: NavigationService.instance.navigationKey,
+            routes: {
+              "LoginScreen": (BuildContext context) => LoginScreen(),
+              "LayoutScreen": (BuildContext context) => LayoutScreen(),
+              "SignupScreen": (BuildContext context) => SignupScreen(),
+              "PrivacyPolicyScreen": (BuildContext context) =>
+                  PrivacyPolicyScreen(),
+            },
+            title: 'Student ODC',
+            theme: ThemeData(
+              textTheme:
+                  GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
+              primarySwatch: Colors.blue,
+            ),
+            home: SplashScreen(),
           ),
-          home: SplashScreen(),
         );
       },
-
     );
-
   }
 }
-

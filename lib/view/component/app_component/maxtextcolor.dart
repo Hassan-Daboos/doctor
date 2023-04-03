@@ -20,13 +20,13 @@ class CustomMaxColorText extends StatelessWidget {
         CustomText(
           text: '$fristtext ',
           fontSize: 33,
-          color: Colors.black,
+          color: textcolor,
           fontWeight: FontWeight.w700,
         ),
         CustomText(
           text: '$secondtext',
           fontSize: 33,
-          color: orange,
+          color: maincolor,
           fontWeight: FontWeight.w700,
         ),
       ],
