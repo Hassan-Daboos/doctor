@@ -59,6 +59,9 @@ dependencies:
   shared_preferences:
   dio:
   curl_logger_dio_interceptor:
+  image_picker:
+  file_picker:
+  path_provider:
 
 dev_dependencies:
   flutter_test:
