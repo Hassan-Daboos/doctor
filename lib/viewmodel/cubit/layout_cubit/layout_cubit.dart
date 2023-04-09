@@ -4,9 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../view/screens/layouthome/AboutusScreen.dart';
-import '../../../view/screens/layouthome/HomeScreen.dart';
-import '../../../view/screens/layouthome/ProfileScreen.dart';
+import '../../../view/screens/layouthome/aboutusScreens/AboutusScreen.dart';
+import '../../../view/screens/layouthome/homescreen/HomeScreen.dart';
+import '../../../view/screens/layouthome/profileScreens/ProfileScreen.dart';
 import 'layout_states.dart';
 
 

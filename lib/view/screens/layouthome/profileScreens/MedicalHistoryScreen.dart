@@ -1,28 +1,32 @@
-import 'package:doctor/constant/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 
-import '../../component/app_component/custom_text.dart';
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+import '../../../../constant/NavigationService.dart';
+import '../../../../constant/color_manager.dart';
+import '../../../component/app_component/custom_text.dart';
+class MedicalHistoryScreen extends StatelessWidget {
+  const MedicalHistoryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-      appBar: AppBar(
-        elevation: 0,
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        title:  CustomText(
-          text: 'Profile',
-          fontSize: 22,
-          color: textcolor,
-          fontWeight: FontWeight.bold,
-        ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: textcolor,
+        onPressed: () {
+          NavigationService
+              .instance.navigationKey!.currentState!
+              .pushNamed(
+            "addMedicalHistory",
+          );
+
+        },
+        child: Icon(Icons.add),
+
       ),
+      backgroundColor: Colors.grey.shade100,
+
+
       body: Timeline(
         primary: true,
         children: <TimelineModel>[

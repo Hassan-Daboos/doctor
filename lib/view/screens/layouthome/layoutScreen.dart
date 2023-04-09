@@ -38,7 +38,7 @@ class LayoutScreen extends StatelessWidget {
             shadowColor: maincolor.withOpacity(0.6),
             activeColor: textcolor,
             color: textcolor,
-            backgroundColor: maincolor,
+            backgroundColor: background,
             // currentIndex: layoutCubit.currentIndex,
             //     type: BottomNavigationBarType.fixed,
             //     selectedItemColor: textcolor,

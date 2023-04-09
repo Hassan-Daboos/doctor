@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'constant/NavigationService.dart';
 import 'constant/observer.dart';
 import 'view/screens/layouthome/layoutScreen.dart';
+import 'view/screens/layouthome/profileScreens/addMedicalHistory.dart';
 import 'viewmodel/cubit/layout_cubit/layout_cubit.dart';
 
 Future<void> main() async {
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
               "LoginScreen": (BuildContext context) => LoginScreen(),
               "LayoutScreen": (BuildContext context) => LayoutScreen(),
               "SignupScreen": (BuildContext context) => SignupScreen(),
+              "addMedicalHistory": (BuildContext context) => addMedicalHistory(),
               "PrivacyPolicyScreen": (BuildContext context) =>
                   PrivacyPolicyScreen(),
             },
