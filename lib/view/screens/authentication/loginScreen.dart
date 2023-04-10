@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../constant/NavigationService.dart';
 import '../../../constant/color_manager.dart';
 import '../../../constant/data.dart';
+import '../../../viewmodel/cubit/outh.dart';
 import '../../component/app_component/custom_button.dart';
 import '../../component/app_component/custom_text.dart';
 import '../../component/app_component/custom_text_form_filed.dart';
@@ -149,9 +150,9 @@ class LoginScreen extends StatelessWidget {
                             buttonColor: maincolor,
                             borderRadius: 7,
                             onPressed: () {
-                              Navigator.of(context)
-                                  .pushNamedAndRemoveUntil('LayoutScreen', (Route<dynamic> route) => false);
-
+                              // Navigator.of(context)
+                              //     .pushNamedAndRemoveUntil('LayoutScreen', (Route<dynamic> route) => false);
+                              Authentication.mailSignIn("hassan@gmail.com","H@ssan123");
                               // if (formKey.currentState!.validate()) {
                               //   print("objectvald");
                               // }

@@ -62,7 +62,8 @@ dependencies:
   image_picker:
   file_picker:
   path_provider:
-
+  firebase_core:
+  firebase_auth: ^4.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
