@@ -20,10 +20,19 @@ class CustomButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: ElevatedButton(
+        clipBehavior: Clip.none,
+
+
         child: widget,
         style: ElevatedButton.styleFrom(
-          primary: buttonColor,
+
+
           elevation: 0,
+
+          backgroundColor: maincolor,
+          // background
+
+
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(borderRadius)),
         ),

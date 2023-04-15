@@ -3,6 +3,7 @@ import 'package:doctor/view/screens/Splash_onBoard_screens/SplashScreen.dart';
 import 'package:doctor/view/screens/authentication/PrivacyPolicyScreen.dart';
 import 'package:doctor/view/screens/authentication/loginScreen.dart';
 import 'package:doctor/view/screens/authentication/signupscreen.dart';
+import 'package:doctor/viewmodel/cubit/auth_cubit/auth_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => LayoutCubit()),
+            BlocProvider(create: (context) => AuthCubit()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

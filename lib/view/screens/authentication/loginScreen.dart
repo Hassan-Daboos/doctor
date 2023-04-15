@@ -1,15 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../constant/NavigationService.dart';
 import '../../../constant/color_manager.dart';
 import '../../../constant/data.dart';
+import '../../../viewmodel/cubit/auth_cubit/auth_cubit.dart';
+import '../../../viewmodel/cubit/auth_cubit/auth_states.dart';
 import '../../../viewmodel/cubit/outh.dart';
 import '../../component/app_component/custom_button.dart';
 import '../../component/app_component/custom_text.dart';
 import '../../component/app_component/custom_text_form_filed.dart';
 import '../../component/app_component/maxtextcolor.dart';
+import '../../component/app_component/toast.dart';
+import '../layouthome/layoutScreen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -19,6 +24,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var authCubit = BlocProvider.of<AuthCubit>(context,listen:true);
+
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -66,15 +73,15 @@ class LoginScreen extends StatelessWidget {
                         ),
                         TextFormFieldsCustom(
                           controller: emailController,
-                          hintText: "Phone Number",
-                          keyboardType: TextInputType.phone,
+                          hintText: "email",
+                          keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
                             if (value!.trim().isEmpty) {
-                              return "Phone must be not Empty";
-                            } else if (RegExp(validatorEmail)
+                              return "email must be not Empty";
+                            } else if (!RegExp(validatorEmail)
                                 .hasMatch(value.trim())) {
-                              return "Phone is not Valid";
+                              return "email is not Valid";
                             }
                             return null;
                           },
@@ -134,31 +141,45 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 90,
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: CustomButton(
-                            widget: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 15),
-                              child: CustomText(
-                                text: 'Login',
-                                fontSize: 12,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
+                        BlocConsumer<AuthCubit,AuthStates>(builder: (context,state)
+                        {
+                          return  state is ! UserLoginLoading ?Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: CustomButton(
+                              widget: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0, vertical: 15),
+                                child: CustomText(
+                                  text: 'Login',
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
+                              buttonColor: maincolor,
+                              borderRadius: 7,
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamedAndRemoveUntil('LayoutScreen', (Route<dynamic> route) => false);
+                                // Authentication.mailSignIn("hassan@gmail.com","H@ssan123");
+                                // if (formKey.currentState!.validate()) {
+                                //   print("objectvald");
+                                // }
+                                authCubit.loginUser(email: emailController.text, password: passwordController.text);
+                              },
                             ),
-                            buttonColor: maincolor,
-                            borderRadius: 7,
-                            onPressed: () {
-                              // Navigator.of(context)
-                              //     .pushNamedAndRemoveUntil('LayoutScreen', (Route<dynamic> route) => false);
-                              Authentication.mailSignIn("hassan@gmail.com","H@ssan123");
-                              // if (formKey.currentState!.validate()) {
-                              //   print("objectvald");
-                              // }
-                            },
-                          ),
-                        ),
+                          ):Center(child: CircularProgressIndicator());
+                        }, listener: (context,state){
+                          if(state is UserLoginSuccess)
+                          {
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
+                          }if(state is UserLoginError)
+                          {
+                            showToast(state.msg);
+                          }
+                        }),
+
+
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 20,
                         ),
@@ -185,11 +206,7 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
-                                        NavigationService
-                                            .instance.navigationKey!.currentState!
-                                            .pushNamed(
-                                          "SignupScreen",
-                                        );                                      }),
+                                       Navigator.pushReplacementNamed(context, 'SignupScreen');                                      }),
                               ],
                             ),
                           ),

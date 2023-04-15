@@ -1,14 +1,20 @@
+import 'package:doctor/view/screens/layouthome/homescreen/HomeScreen.dart';
+import 'package:doctor/view/screens/layouthome/layoutScreen.dart';
+import 'package:doctor/viewmodel/cubit/auth_cubit/auth_states.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../constant/NavigationService.dart';
 import '../../../constant/color_manager.dart';
 import '../../../constant/data.dart';
+import '../../../viewmodel/cubit/auth_cubit/auth_cubit.dart';
 import '../../component/app_component/custom_button.dart';
 import '../../component/app_component/custom_text.dart';
 import '../../component/app_component/custom_text_form_filed.dart';
 import '../../component/app_component/maxtextcolor.dart';
+import '../../component/app_component/toast.dart';
 
 class SignupScreen extends StatefulWidget {
   SignupScreen({Key? key}) : super(key: key);
@@ -34,6 +40,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var authCubit = BlocProvider.of<AuthCubit>(context,listen:true);
     return Scaffold(
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -115,7 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     validator: (value) {
                                       if (value!.trim().isEmpty) {
                                         return "Email must be not Empty";
-                                      } else if (RegExp(validatorEmail)
+                                      } else if (!RegExp(validatorEmail)
                                           .hasMatch(value.trim())) {
                                         return "Email is not Valid";
                                       }
@@ -169,6 +176,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     Checkbox(
                                       activeColor: maincolor,
                                       value: this.value,
+
                                       onChanged: (bool? value) {
                                         this.value = value;
                                         setState(() {
@@ -217,28 +225,39 @@ class _SignupScreenState extends State<SignupScreen> {
                                 SizedBox(
                                   height: MediaQuery.of(context).size.height / 90,
                                 ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: CustomButton(
-                                    widget: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20.0, vertical: 15),
-                                      child: CustomText(
-                                        text: "Sign Up",
-                                        fontSize: 12,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    buttonColor: maincolor,
-                                    borderRadius: 7,
-                                    onPressed: () {
-                                      if (formKey.currentState!.validate()) {
-                                        print("objectvald");
-                                      }
-                                    },
-                                  ),
-                                ),
+                               BlocConsumer<AuthCubit,AuthStates>(builder: (context,state)
+                               {
+                                 return  state is ! RegisterLoadingState ?Container(
+                                   width: MediaQuery.of(context).size.width,
+                                   child: CustomButton(
+                                     widget: const Padding(
+                                       padding: EdgeInsets.symmetric(
+                                           horizontal: 20.0, vertical: 15),
+                                       child: CustomText(
+                                         text: "Sign Up",
+                                         fontSize: 12,
+                                         color: Colors.white,
+                                         fontWeight: FontWeight.w600,
+                                       ),
+                                     ),
+                                     buttonColor: maincolor,
+                                     borderRadius: 7,
+                                     onPressed: () {
+                                       if (formKey.currentState!.validate()) {
+                                         authCubit.registerUser(email: emailController.text, password: passwordController.text, phone: phoneController.text, fullName: fullNameController.text);
+                                       }
+                                     },
+                                   ),
+                                 ):Center(child: CircularProgressIndicator());
+                               }, listener: (context,state){
+                                 if(state is RegisterSuccessState)
+                                 {
+                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
+                                 }if(state is RegisterErrorState)
+                                 {
+                                   showToast(state.msg);
+                                 }
+                               }),
                                 SizedBox(
                                   height: MediaQuery.of(context).size.height / 20,
                                 ),
