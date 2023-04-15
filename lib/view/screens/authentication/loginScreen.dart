@@ -159,13 +159,12 @@ class LoginScreen extends StatelessWidget {
                               buttonColor: maincolor,
                               borderRadius: 7,
                               onPressed: () {
-                                Navigator.of(context)
-                                    .pushNamedAndRemoveUntil('LayoutScreen', (Route<dynamic> route) => false);
+
                                 // Authentication.mailSignIn("hassan@gmail.com","H@ssan123");
-                                // if (formKey.currentState!.validate()) {
-                                //   print("objectvald");
-                                // }
-                                authCubit.loginUser(email: emailController.text, password: passwordController.text);
+                                if (formKey.currentState!.validate()) {
+                                  authCubit.loginUser(email: emailController.text, password: passwordController.text);
+
+                                }
                               },
                             ),
                           ):Center(child: CircularProgressIndicator());
