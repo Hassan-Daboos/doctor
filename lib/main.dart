@@ -50,11 +50,12 @@ class MyApp extends StatelessWidget {
               "LoginScreen": (BuildContext context) => LoginScreen(),
               "LayoutScreen": (BuildContext context) => LayoutScreen(),
               "SignupScreen": (BuildContext context) => SignupScreen(),
-              "addMedicalHistory": (BuildContext context) => addMedicalHistory(),
+              "addMedicalHistory": (BuildContext context) =>
+                  addMedicalHistory(),
               "PrivacyPolicyScreen": (BuildContext context) =>
                   PrivacyPolicyScreen(),
             },
-            title: 'Student ODC',
+            title: 'pation  ',
             theme: ThemeData(
               textTheme:
                   GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
