@@ -31,9 +31,24 @@ class PhotoPickedErrorState extends LayoutStates {}
 class PhotoPickedRemovedState extends LayoutStates {
 
 }
+class DoctorInfoLoadingState extends LayoutStates {}
+class DoctorInfoSuccessState extends LayoutStates {}
+class DoctorInfoErrorState extends LayoutStates {
+
+}
 class CreateMedicalHistoryLoadingState extends LayoutStates {}
 class CreateMedicalHistorySuccessState extends LayoutStates {}
 class CreateMedicalHistoryErrorState extends LayoutStates {
+
+}
+class CreateReservationLoadingState extends LayoutStates {}
+class CreateReservationSuccessState extends LayoutStates {}
+class CreateReservationErrorState extends LayoutStates {
+
+}
+class GetReservationLoadingState extends LayoutStates {}
+class GetReservationSuccessState extends LayoutStates {}
+class GetReservationErrorState extends LayoutStates {
 
 }
 class UpdateDataLoadingState extends LayoutStates {}
@@ -45,4 +60,8 @@ class GetUserDataLoadingState extends LayoutStates {}
 class GetUserDataSuccessState extends LayoutStates {}
 class GetUserDataErrorState extends LayoutStates {
 
+}
+class AppointmentLoadingState extends LayoutStates {}
+class AppointmentSuccessState extends LayoutStates {}
+class AppointmentErrorState extends LayoutStates {
 }

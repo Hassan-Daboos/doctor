@@ -31,13 +31,14 @@ class AuthCubit extends Cubit<AuthStates>
           .instance // firebase auth this library i use it to register i send request Email and password
           .createUserWithEmailAndPassword(
           email: email, password: password
-      ).then((value) async {
+      ).then((values) async {
         // if register successful i will add user data to firebase
         userModel = UserModel(
 
 
           email: email,
           phone: phone,
+          userId: values.user!.uid,
 
           photo:
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH6PjyUR8U-UgBWkOzFe38qcO29regN43tlGGk4sRd&s',
@@ -46,10 +47,10 @@ class AuthCubit extends Cubit<AuthStates>
         );
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(value.user!.uid)
+            .doc(values.user!.uid)
             .set(userModel!.toMap())
             .then((value) async {
-          emit(RegisterSuccessState());
+          emit(RegisterSuccessState(values.user!.uid));
         });
       }).catchError((onError) {
         if (onError is FirebaseAuthException) {
@@ -78,15 +79,23 @@ class AuthCubit extends Cubit<AuthStates>
         .then((value) async {
 
 
+
       // if login successful i will get user id and i will use it to get user data from firebase
       await FirebaseFirestore.instance
           .collection('users')
           .doc(value.user!.uid)
           .get()
-          .then((value) async {
-        userModel = UserModel.fromMap(value.data()!);
+          .then((values) async {
+            if(values.exists)
+            {
+              userModel = UserModel.fromMap(values.data()!);
+
+            }else
+            {
+              print('+++++++++++++++++++++++++');
+            }
         // save user id in cashHelper
-        emit(UserLoginSuccess());
+        emit(UserLoginSuccess( value.user!.uid));
         // here i will store user data in userModel
         //  cashing role user
       });

@@ -7,6 +7,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../constant/NavigationService.dart';
 import '../../../constant/assets.dart';
 import '../../../constant/color_manager.dart';
+import '../../../viewmodel/database/CacheHelper.dart';
 import '../../component/app_component/CustomButtonBorder.dart';
 import '../../component/app_component/custom_button.dart';
 import '../../component/app_component/custom_text.dart';
@@ -35,6 +36,20 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
               height: 550.h,
               margin: EdgeInsets.only(top: 100.h),
               child: PageView(
+                controller: pageController,
+                onPageChanged: (index) {
+                  if (index ==
+                      // onBoardModel.length-1
+                      3 - 1) {
+                    setState(() {
+                      isLast = true;
+                    });
+                  } else {
+                    setState(() {
+                      isLast = false;
+                    });
+                  }
+                },
                 children: [
                   Column(
                     children: [
@@ -190,24 +205,6 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                     ],
                   ),
                 ],
-                // itemBuilder: (context, index) => ,
-                // itemCount:
-                // // onBoardModel.length,
-                // 3,
-                controller: pageController,
-                onPageChanged: (index) {
-                  if (index ==
-                      // onBoardModel.length-1
-                      3 - 1) {
-                    setState(() {
-                      isLast = true;
-                    });
-                  } else {
-                    setState(() {
-                      isLast = false;
-                    });
-                  }
-                },
               ),
             ),
             SmoothPageIndicator(
@@ -243,11 +240,15 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                     buttonColor: maincolor,
                     borderRadius: 7,
                     onPressed: () {
-                      NavigationService
-                          .instance.navigationKey!.currentState!
-                          .pushNamed(
-                        "SignupScreen",
-                      );
+                      CacheHelper.put(key: 'onBoard', value: true).then((value)
+                      {
+                        NavigationService
+                            .instance.navigationKey!.currentState!
+                            .pushNamed(
+                          "SignupScreen",
+                        );
+                      });
+
 
                     },
                   ),
@@ -269,11 +270,15 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                     buttonColor: Colors.white,
                     borderRadius: 7,
                     onPressed: () {
-                      NavigationService
-                          .instance.navigationKey!.currentState!
-                          .pushNamed(
-                        "LoginScreen",
-                      );
+                      CacheHelper.put(key: 'onBoard', value: true).then((value)
+                      {
+                        NavigationService
+                            .instance.navigationKey!.currentState!
+                            .pushNamed(
+                          "LoginScreen",
+                        );
+                      });
+
 
                     },
                   ),

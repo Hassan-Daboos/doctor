@@ -14,27 +14,25 @@ class Functional {
     }
   }
 
-  static Future<String?> launchWhatsApp({
-    required int phone,
+  static void launchWhatsApp({
+    required String phone,
     required String message,
   }) async {
-    if (Platform.isAndroid) {
-      // add the [https]
-      return "whatsapp://wa.me/$phone:03452121308:/?text=${Uri.parse(message)}";
-    } else {
-      // add the [https]
-      return "whatsapp://send?   phone=$phone&text=${Uri.parse(message)}";
-    }
+
+    var whatsappUrl = "whatsapp://send?phone=$phone&text=$message";
+    await canLaunch(whatsappUrl)
+        ? launch(whatsappUrl)
+        : print(
+        "open whatsapp app link or do a snackbar with notification that there is no whatsapp installed");
+    // return "whatsapp://wa.me/$phone:03452121308:/?text=${Uri.parse(message)}";
   }
 
-
-
-
- static Future<void> launchSocialMediaAppIfInstalled({
+  static Future<void> launchSocialMediaAppIfInstalled({
     required String url,
   }) async {
     try {
-      bool launched = await launch(url, forceSafariVC: false); // Launch the app if installed!
+      bool launched = await launch(url,
+          forceSafariVC: false); // Launch the app if installed!
 
       if (!launched) {
         launch(url); // Launch web view if app is not installed!
@@ -43,6 +41,4 @@ class Functional {
       launch(url); // Launch web view if app is not installed!
     }
   }
-
-
 }

@@ -4,6 +4,7 @@ import 'package:doctor/view/screens/authentication/PrivacyPolicyScreen.dart';
 import 'package:doctor/view/screens/authentication/loginScreen.dart';
 import 'package:doctor/view/screens/authentication/signupscreen.dart';
 import 'package:doctor/viewmodel/cubit/auth_cubit/auth_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,13 +17,26 @@ import 'view/screens/layouthome/layoutScreen.dart';
 import 'view/screens/layouthome/profileScreens/addMedicalHistory.dart';
 import 'viewmodel/cubit/layout_cubit/layout_cubit.dart';
 import 'viewmodel/database/CacheHelper.dart';
-
+ bool isLogin =false;
+ bool onBoard =false;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await CacheHelper.init();
   // await DioHelper.init();
   Bloc.observer = MyBlocObserver();
+var onBoarding =CacheHelper.get(key: 'onBoard');
+
+if(onBoarding !=null)
+{
+  onBoard =true;
+}else
+{
+  onBoard =false;
+}
+print(FirebaseAuth.instance.currentUser!.uid.toString());
+
+print(isLogin);
 
   runApp(const MyApp());
 }

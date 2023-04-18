@@ -10,6 +10,7 @@ import '../../../constant/NavigationService.dart';
 import '../../../constant/color_manager.dart';
 import '../../../constant/data.dart';
 import '../../../viewmodel/cubit/auth_cubit/auth_cubit.dart';
+import '../../../viewmodel/database/CacheHelper.dart';
 import '../../component/app_component/custom_button.dart';
 import '../../component/app_component/custom_text.dart';
 import '../../component/app_component/custom_text_form_filed.dart';
@@ -252,7 +253,11 @@ class _SignupScreenState extends State<SignupScreen> {
                                }, listener: (context,state){
                                  if(state is RegisterSuccessState)
                                  {
-                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
+                                   CacheHelper.put(key: 'uid', value: state.uid).then((value)
+                                   {
+                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
+
+                                   });
                                  }if(state is RegisterErrorState)
                                  {
                                    showToast(state.msg);

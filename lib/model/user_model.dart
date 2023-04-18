@@ -3,11 +3,13 @@ class UserModel {
   String email;
   String phone;
   String photo;
+  String? userId;
 
 
   UserModel({
 
     required this.email,
+     this.userId,
     required this.fullName,
 
     required this.photo,
@@ -20,6 +22,7 @@ class UserModel {
     return {
 
       'email': this.email,
+      'userId': this.userId,
       'fullName': this.fullName,
 
       'photo': this.photo,
@@ -33,6 +36,7 @@ class UserModel {
     return UserModel(
 
       email: map['email'] as String,
+      userId: map['userId'] as String,
    photo: map['photo'] as String,
 
       phone: map['phone'] as String,

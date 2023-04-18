@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   #  design_UI_package
   flutter_launcher_icons:
+  intl:
   animated_splash_screen:
   flutter_svg:
   font_awesome_flutter:

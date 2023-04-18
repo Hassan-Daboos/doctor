@@ -25,6 +25,7 @@ class _editprofileScreenState extends State<editprofileScreen> {
     // TODO: implement initState
     super.initState();
     LayoutCubit.get(context).getUserInfo();
+    // LayoutCubit.get(context).getPatientsBookedAppointments();
   }
   @override
   Widget build(BuildContext context) {
