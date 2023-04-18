@@ -137,9 +137,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                     hintText: "Password",
                                     keyboardType: TextInputType.text,
                                     textInputAction: TextInputAction.next,
-                                    isPassword: true,
-                                    suffixIcon: Icons.remove_red_eye,
-                                    suffix: true,
+                                    isPassword: authCubit.ispassword,
+                                    suffixIcon: IconButton(
+                                      onPressed: (){
+                                        authCubit.changicon();
+                                      },
+                                      icon: Icon(authCubit.ispassword==true?Icons.remove_red_eye:Icons.remove_red_eye_outlined),
+                                    ),
                                     validator: (value) {
                                       if (value!.trim().isEmpty) {
                                         return "Password must be not Empty";

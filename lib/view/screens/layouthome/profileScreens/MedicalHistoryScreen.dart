@@ -45,8 +45,7 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (BuildContext context) {
                 return DescriptionHistory(
-                  medicalHistoryModel:
-                      layoutCubit.patientMedicalHistoryModel[index],
+                  medicalHistoryModel: layoutCubit.patientMedicalHistoryModel[index],
                 );
               }));
             },

@@ -93,8 +93,13 @@ class LoginScreen extends StatelessWidget {
                             hintText: "Password",
                             keyboardType: TextInputType.text,
                             textInputAction: TextInputAction.next,
-                            isPassword: true,
-                            suffixIcon: Icons.remove_red_eye,
+                            isPassword: authCubit.ispassword,
+                            suffixIcon: IconButton(
+                            onPressed: (){
+                              authCubit.changicon();
+                            },
+                            icon: Icon(authCubit.ispassword==true?Icons.remove_red_eye:Icons.remove_red_eye_outlined),
+                          ),
                             suffix: true,
                             validator: (value) {
                               if (value!.trim().isEmpty) {

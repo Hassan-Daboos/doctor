@@ -15,3 +15,6 @@ class UserLoginError extends AuthStates {
 
   UserLoginError(this.msg);
 }
+
+
+class changIconStates extends AuthStates {}

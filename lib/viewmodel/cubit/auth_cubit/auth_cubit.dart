@@ -99,4 +99,13 @@ class AuthCubit extends Cubit<AuthStates>
     });
   }
 
+
+  bool ispassword=true;
+
+  void changicon(){
+    ispassword=!ispassword;
+    emit(changIconStates());
+  }
+
+
   }
