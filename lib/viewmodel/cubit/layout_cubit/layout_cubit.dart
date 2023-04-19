@@ -217,17 +217,17 @@ class LayoutCubit extends Cubit<LayoutStates> {
     // DateFormat('hh:mm:ss a').parse('2023-04-28 00:00:00.000').hour,
     // DateFormat('hh:mm:ss a').parse('2023-04-28 00:00:00.000').minute,
     // DateFormat('hh:mm:ss a').parse('2023-04-28 00:00:00.000').second,
-
   );
   MyModel? nightModel;
   MyModel? dayModel;
-  List<String> datesNight=[];
-  List<String> datesDay=[];
-  DateTime dateTime =DateTime.now();
-  Future<void> getPatientsBookedAppointments({String? doc }) async {
-    datesNight=[];
-    datesDay=[];
-    dayModel=null;
+  List<String> datesNight = [];
+  List<String> datesDay = [];
+  DateTime dateTime = DateTime.now();
+
+  Future<void> getPatientsBookedAppointments({String? doc}) async {
+    datesNight = [];
+    datesDay = [];
+    dayModel = null;
     emit(PatientMedicalHistoryLoadingState());
 
     await FirebaseFirestore.instance
@@ -237,39 +237,54 @@ class LayoutCubit extends Cubit<LayoutStates> {
         .then((value) {
       print('${value.data()}===========');
 
-
-
-
-      dayModel=MyModel.fromJson((value.data()!));
-
+      dayModel = MyModel.fromJson((value.data()!));
 
       dayModel!.dates!.forEach((element) {
+
         DateTime dateTime = DateTime(
           DateTime.now().year,
           DateTime.now().month,
           DateTime.now().day,
-          DateFormat('hh:mm:ss a').parse(element).hour,
-          DateFormat('hh:mm:ss a').parse(element).minute,
-          DateFormat('hh:mm:ss a').parse(element).second,
+          DateFormat('hh:mm:ss a').parse(element.time!).hour,
+          DateFormat('hh:mm:ss a').parse(element.time!).minute,
+          DateFormat('hh:mm:ss a').parse(element.time!).second,
         );
-        if (dateTime == fiveOclock ) {
-          print('The dates are equal');
-        } else if (dateTime.isBefore(fiveOclock) &&DateTime.now().isBefore(dateTime)) {
+
+
+        if (dateTime == fiveOclock) {
+          //
+        } else if (dateTime.isBefore(fiveOclock) &&
+            DateTime.now().isBefore(dateTime) &&
+            !nonReservationModel.any((elementR) =>
+                elementR.time == element.time &&
+                elementR.date ==
+                    DateTime(
+                      DateTime.now().year,
+                      DateTime.now().month,
+                      DateTime.now().day,
+                      0, // 5 PM is hour 17 in 24-hour time
+                      0,
+                      0,
+                    ).toString())) {
+          print('true=========');
           print('The date in the string is earlier');
-          datesDay.add(element);
-        } else if(dateTime.isAfter(fiveOclock)&&DateTime.now().isBefore(dateTime)) {
-          datesNight.add(element);
-          print('The date in the string is later');
-        }else
-        {
+          datesDay.add(element.time!);
+        } else if (dateTime.isAfter(fiveOclock) &&
+            DateTime.now().isBefore(dateTime) &&!nonReservationModel.any((elementR) => elementR.time==element.time && elementR.date==DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+          DateTime.now().day,
+          0, // 5 PM is hour 17 in 24-hour time
+          0,
+          0,
+        ).toString())) {
+          datesNight.add(element.time!);
+        } else {
           print('null');
         }
-
       });
-      print(dayModel!.dates);
-      print(datesDay);
       print(datesNight);
-      //{day: 0, data: [{day: 0, dayDate: [{date: 2, check: false}, {date: 3, check: false}, {date: 7, check: false}]}]}
+      print(datesDay);
 
       emit(PatientMedicalHistorySuccessState());
     }).catchError((onError) {
@@ -278,117 +293,140 @@ class LayoutCubit extends Cubit<LayoutStates> {
       emit(PatientMedicalHistoryErrorState());
     });
   }
-  DateTime checkTime =DateTime.now();
+
+  DateTime checkTime = DateTime.now();
 
   Future<void> createReservation({
     required String time,
     required String date,
     required String type,
     required UserModel userData,
-
-
   }) async {
     emit(CreateReservationLoadingState());
     var newDocId = Random().nextInt(100000);
 
-
+    print(time);
     await FirebaseFirestore.instance
-        .collection('checked').doc(newDocId.toString())
+        .collection('checked')
+        .doc(newDocId.toString())
         .set({
-      'time':time,
-      'date':date,
-      'userId':FirebaseAuth.instance.currentUser!.uid,
-      'docId':newDocId,
-      'type':type,
-      "userData":userData.toMap()
-
-
-    })
-        .then((value) async {
-
+      'time': time,
+      'date': date,
+      'userId': FirebaseAuth.instance.currentUser!.uid,
+      'docId': newDocId,
+      'type': type,
+      "userData": userData.toMap()
+    }).then((value) async {
       emit(CreateReservationSuccessState());
       getReservation();
     }).catchError((onError) {
       emit(CreateReservationErrorState());
     });
   }
-List<ReservationModel> reservationModel =[];
+
+  List<ReservationModel> reservationModel = [];
+  List<ReservationModel> nonReservationModel = [];
 
   Future<void> getReservation() async {
-    reservationModel=[];
+    getAllReservation();
+    reservationModel = [];
+
     emit(GetReservationLoadingState());
+    print( '${DateTime.now().add(const Duration(hours: 2))}DateTime.now()');
+
 
     await FirebaseFirestore.instance
         .collection('checked')
-        .where('userId',isEqualTo: FirebaseAuth.instance.currentUser!.uid).where('date',isEqualTo: DateTime(
-      checkTime.year,
-      checkTime.month,
-      checkTime.day,
-      0, // 5 PM is hour 17 in 24-hour time
-      0,
-      0,
-    ).toString()).get()
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where('date',
+            isEqualTo: DateTime(
+              checkTime.year,
+              checkTime.month,
+              checkTime.day,
+              0, // 5 PM is hour 17 in 24-hour time
+              0,
+              0,
+            ).toString())
+        .get()
         .then((value) async {
+      if (value.docs.isNotEmpty) {
+        value.docs.forEach((elementOne) {
+          DateTime dateTime = DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+            DateFormat('hh:mm:ss ').parse(elementOne.data()['time']).hour,
+            DateFormat('hh:mm:ss ').parse(elementOne.data()['time']).minute,
+            DateFormat('hh:mm:ss ').parse(elementOne.data()['time']).second,
+          );
 
+          if (dateTime == DateTime.now()) {
 
+            deleteDoc(doc: elementOne.id);
+            //delete
+          } else if (dateTime.isBefore(DateTime.now())) {
 
+            deleteDoc(doc: elementOne.id);
+          } else {
+            print(dateTime);
 
+            reservationModel.add(ReservationModel.fromMap(elementOne.data()));
 
-         if(!value.docs.isEmpty)
-         {
-           value.docs.forEach((elementOne) {
-             DateTime dateTime = DateTime(
-               DateTime.now().year,
-               DateTime.now().month,
-               DateTime.now().day,
-               DateFormat('hh:mm:ss ').parse(elementOne.data()['time']).hour,
-               DateFormat('hh:mm:ss ').parse(elementOne.data()['time']).minute,
-               DateFormat('hh:mm:ss ').parse(elementOne.data()['time']).second,
-             );
-             if (dateTime == DateTime.now()) {
-               print('The dates are equal');
-               deleteDoc(doc: elementOne.id);
-               //delete
-             } else if (dateTime.isBefore(DateTime.now())) {
-               print('The date in the string is earlier');
-               print(dateTime);
-               print(elementOne.data());
-               reservationModel
-                   .add(ReservationModel.fromMap(elementOne.data()));
-             } else {
-               print(dateTime);
-               deleteDoc(doc: elementOne.id);
-               //delete
-               print('The date in the string is later');
-             }
-
-           });
-         }else
-         {
-          getPatientsBookedAppointments(
-               doc: checkTime.weekday.toString()
-           );
-         }
-
-
-
+          }
+        });
+      } else {
+        getPatientsBookedAppointments(doc: checkTime.weekday.toString());
+      }
 
       emit(GetReservationSuccessState());
     }).catchError((onError) {
       emit(GetReservationErrorState());
     });
   }
-  UserModel? doctorInfo;
-  Future<void> deleteDoc({String? doc}) {
 
-    return FirebaseFirestore.instance.collection('checked')
+  Future<void> getAllReservation() async {
+    nonReservationModel = [];
+    emit(GetAllReservationLoadingState());
+
+    await FirebaseFirestore.instance
+        .collection('checked')
+        .where('date',
+            isEqualTo: DateTime(
+              checkTime.year,
+              checkTime.month,
+              checkTime.day,
+              0, // 5 PM is hour 17 in 24-hour time
+              0,
+              0,
+            ).toString())
+        .get()
+        .then((value) async {
+      if (value.docs.isNotEmpty) {
+        value.docs.forEach((element) {
+          nonReservationModel.add(ReservationModel.fromMap(element.data()));
+          print('${element.data()}nonReservation');
+        });
+      }
+
+      emit(GetAllReservationSuccessState());
+    }).catchError((onError) {
+      emit(GetAllReservationErrorState());
+    });
+  }
+
+  UserModel? doctorInfo;
+
+  Future<void> deleteDoc({String? doc}) {
+    return FirebaseFirestore.instance
+        .collection('checked')
         .doc(doc)
         .delete()
         .then((value) {
-          getReservation();
-    })
-        .catchError((error) => print("Failed to delete user: $error"));
+      getReservation();
+      getAllReservation();
+    }).catchError((error) => print("Failed to delete user: $error"));
   }
+
   Future<void> getDoctorInfo() async {
     emit(DoctorInfoLoadingState());
 
@@ -398,10 +436,7 @@ List<ReservationModel> reservationModel =[];
         .get()
         .then((value) {
       print(value.data());
-      doctorInfo =UserModel.fromMap(value.data()!);
-
-
-
+      doctorInfo = UserModel.fromMap(value.data()!);
 
       emit(DoctorInfoSuccessState());
     }).catchError((onError) {

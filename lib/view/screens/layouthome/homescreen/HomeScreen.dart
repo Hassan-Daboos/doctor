@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen>
     LayoutCubit.get(context).getReservation();
     LayoutCubit.get(context).getUserInfo();
 
+
   }
 
   int segmentedControlGroupValue = 0;
@@ -286,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen>
                             separatorBuilder: (context, index) => SizedBox(
                               height: 10.h,
                             ),
-                            itemCount: layoutCubit.datesNight.length,
+                            itemCount: layoutCubit.datesDay.length,
                             shrinkWrap: true,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 10.w, vertical: 10.h),
@@ -505,7 +506,7 @@ class _HomeScreenState extends State<HomeScreen>
                                       ),
                                       CustomText(
                                         text: layoutCubit
-                                            .reservationModel[index].time,
+                                            .reservationModel[index].time!,
                                         fontSize: 16,
                                         color: textcolor,
                                         fontWeight: FontWeight.w600,
@@ -545,8 +546,10 @@ class _HomeScreenState extends State<HomeScreen>
                       ],
                     )
                   : Center(child: CircularProgressIndicator());
-            }, listener: (context, state) {
+            }, listener: (context, state) async {
               if (state is CreateReservationSuccessState) {
+                // print('${layoutCubit.dayModel!.toJson()}================');
+                // print(layoutCubit.dayModel!.dates![0].check);
 
               }
             })

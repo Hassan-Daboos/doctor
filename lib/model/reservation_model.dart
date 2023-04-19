@@ -1,18 +1,18 @@
 
 class ReservationModel {
-  String time;
-  String userId;
-  String date;
-  int docId;
+  String? time;
+  String? userId;
+  String? date;
+  int? docId;
 
 
 
   ReservationModel({
-    required this.time,
-    required this.date,
-    required this.docId,
+     this.time,
+     this.date,
+     this.docId,
 
-    required this.userId,
+     this.userId,
 
   });
 

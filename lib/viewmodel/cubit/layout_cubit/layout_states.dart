@@ -51,6 +51,11 @@ class GetReservationSuccessState extends LayoutStates {}
 class GetReservationErrorState extends LayoutStates {
 
 }
+class GetAllReservationLoadingState extends LayoutStates {}
+class GetAllReservationSuccessState extends LayoutStates {}
+class GetAllReservationErrorState extends LayoutStates {
+
+}
 class UpdateDataLoadingState extends LayoutStates {}
 class UpdateDataSuccessState extends LayoutStates {}
 class UpdateDataErrorState extends LayoutStates {
