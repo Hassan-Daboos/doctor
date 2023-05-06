@@ -34,7 +34,6 @@ if(onBoarding !=null)
 {
   onBoard =false;
 }
-print(FirebaseAuth.instance.currentUser!.uid.toString());
 
 print(isLogin);
 

@@ -63,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen>
                 locale: LocaleType.en,
                 maxTime: DateTime(2030, 1, 1),
                 minTime: DateTime.now(),
+
                 onChanged: (data) {
                   setState(() {
                     print(data.weekday.toString());
