@@ -41,7 +41,11 @@ class CreateMedicalHistorySuccessState extends LayoutStates {}
 class CreateMedicalHistoryErrorState extends LayoutStates {
 
 }
-class CreateReservationLoadingState extends LayoutStates {}
+class CreateReservationLoadingState extends LayoutStates {
+  int checkId;
+
+  CreateReservationLoadingState(this.checkId);
+}
 class CreateReservationSuccessState extends LayoutStates {}
 class CreateReservationErrorState extends LayoutStates {
 
@@ -69,4 +73,11 @@ class GetUserDataErrorState extends LayoutStates {
 class AppointmentLoadingState extends LayoutStates {}
 class AppointmentSuccessState extends LayoutStates {}
 class AppointmentErrorState extends LayoutStates {
+}class DeleteDocLoadingState extends LayoutStates {
+  int checkId;
+
+  DeleteDocLoadingState(this.checkId);
+}
+class DeleteDocSuccessState extends LayoutStates {}
+class DeleteDocErrorState extends LayoutStates {
 }

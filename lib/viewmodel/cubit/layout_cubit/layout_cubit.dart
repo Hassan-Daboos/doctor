@@ -242,42 +242,44 @@ class LayoutCubit extends Cubit<LayoutStates> {
       dayModel!.dates!.forEach((element) {
 
         DateTime dateTime = DateTime(
-          DateTime.now().year,
-          DateTime.now().month,
-          DateTime.now().day,
+          checkTime.year,
+          checkTime.month,
+          checkTime.day,
           DateFormat('hh:mm:ss a').parse(element.time!).hour,
           DateFormat('hh:mm:ss a').parse(element.time!).minute,
           DateFormat('hh:mm:ss a').parse(element.time!).second,
         );
 
 
+        var dateTime2 = DateTime(
+              checkTime.year,
+              checkTime.month,
+              checkTime.day,
+              0, // 5 PM is hour 17 in 24-hour time
+              0,
+              0,
+            );
+        var dateTime3 = DateTime(
+          checkTime.year,
+          checkTime.month,
+          checkTime.day,
+          17, // 5 PM is hour 17 in 24-hour time
+          0,
+          0,
+        );
         if (dateTime == fiveOclock) {
           //
-        } else if (dateTime.isBefore(fiveOclock) &&
-            DateTime.now().isBefore(dateTime) &&
+        } else if (dateTime.isBefore(dateTime3) &&
+            dateTime2.isBefore(dateTime) &&
             !nonReservationModel.any((elementR) =>
                 elementR.time == element.time &&
                 elementR.date ==
-                    DateTime(
-                      DateTime.now().year,
-                      DateTime.now().month,
-                      DateTime.now().day,
-                      0, // 5 PM is hour 17 in 24-hour time
-                      0,
-                      0,
-                    ).toString())) {
+                    dateTime2.toString())) {
           print('true=========');
           print('The date in the string is earlier');
           datesDay.add(element.time!);
-        } else if (dateTime.isAfter(fiveOclock) &&
-            DateTime.now().isBefore(dateTime) &&!nonReservationModel.any((elementR) => elementR.time==element.time && elementR.date==DateTime(
-          DateTime.now().year,
-          DateTime.now().month,
-          DateTime.now().day,
-          0, // 5 PM is hour 17 in 24-hour time
-          0,
-          0,
-        ).toString())) {
+        } else if (dateTime.isAfter(dateTime3) &&
+            dateTime2.isBefore(dateTime) &&!nonReservationModel.any((elementR) => elementR.time==element.time && elementR.date==dateTime2.toString())) {
           datesNight.add(element.time!);
         } else {
           print('null');
@@ -300,9 +302,10 @@ class LayoutCubit extends Cubit<LayoutStates> {
     required String time,
     required String date,
     required String type,
+    required int checkId,
     required UserModel userData,
   }) async {
-    emit(CreateReservationLoadingState());
+    emit(CreateReservationLoadingState(checkId));
     var newDocId = Random().nextInt(100000);
 
     print(time);
@@ -332,7 +335,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
     reservationModel = [];
 
     emit(GetReservationLoadingState());
-    print( '${DateTime.now().add(const Duration(hours: 2))}DateTime.now()');
+    print( '${DateTime.now().add(const Duration(hours: 3))}DateTime.now()');
 
 
     await FirebaseFirestore.instance
@@ -352,26 +355,43 @@ class LayoutCubit extends Cubit<LayoutStates> {
       if (value.docs.isNotEmpty) {
         value.docs.forEach((elementOne) {
           DateTime dateTime = DateTime(
-            DateTime.now().year,
-            DateTime.now().month,
-            DateTime.now().day,
+            checkTime.year,
+            checkTime.month,
+            checkTime.day,
             DateFormat('hh:mm:ss ').parse(elementOne.data()['time']).hour,
             DateFormat('hh:mm:ss ').parse(elementOne.data()['time']).minute,
             DateFormat('hh:mm:ss ').parse(elementOne.data()['time']).second,
           );
 
+          var dateTime2 = DateTime(
+            checkTime.year,
+            checkTime.month,
+            checkTime.day,
+            22, // 5 PM is hour 17 in 24-hour time
+            0,
+            0,
+          );
           if (dateTime == DateTime.now()) {
+            print('DateTime.now()');
 
             deleteDoc(doc: elementOne.id);
             //delete
-          } else if (dateTime.isBefore(DateTime.now())) {
+          } else if (dateTime.isBefore(dateTime2)) {
+            print('dateTime.isBefore(DateTime.now()');
 
-            deleteDoc(doc: elementOne.id);
-          } else {
-            print(dateTime);
-
+            // deleteDoc(doc: elementOne.id);
             reservationModel.add(ReservationModel.fromMap(elementOne.data()));
+            // reservationModel.add(ReservationModel.fromMap(elementOne.data()));
 
+
+          } else {
+            // deleteDoc(doc: elementOne.id);
+
+            // reservationModel.add(ReservationModel.fromMap(elementOne.data()));
+
+            print('dateTime.isafter(DateTime.now()');
+
+            // deleteDoc(doc: elementOne.id);
           }
         });
       } else {
@@ -416,15 +436,22 @@ class LayoutCubit extends Cubit<LayoutStates> {
 
   UserModel? doctorInfo;
 
-  Future<void> deleteDoc({String? doc}) {
+  Future<void> deleteDoc({String? doc,int? checkId}) {
+    emit(DeleteDocLoadingState(checkId!));
     return FirebaseFirestore.instance
         .collection('checked')
         .doc(doc)
         .delete()
         .then((value) {
       getReservation();
-      getAllReservation();
-    }).catchError((error) => print("Failed to delete user: $error"));
+
+      emit(DeleteDocSuccessState());
+
+    }).catchError((error) {
+      print("Failed to delete user: $error");
+      emit(DeleteDocErrorState());
+
+    });
   }
 
   Future<void> getDoctorInfo() async {

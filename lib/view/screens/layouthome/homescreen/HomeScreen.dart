@@ -174,114 +174,118 @@ class _HomeScreenState extends State<HomeScreen>
                                   SizedBox(
                                     height: 10.h,
                                   ),
-                                  state is! CreateReservationLoadingState
-                                      ? Row(
-                                          children: [
-                                            Expanded(
-                                              child: CustomButton(
-                                                  widget: FittedBox(
-                                                      child: CustomText(
-                                                    text: 'First time',
+
+                                  state is CreateReservationLoadingState  && state.checkId == index
+                                      ?Center(
+                                      child: CircularProgressIndicator())
+                                      :  Row(
+                                    children: [
+                                      Expanded(
+                                        child: CustomButton(
+                                            widget: FittedBox(
+                                                child: CustomText(
+                                                  text: 'First time',
+                                                  fontSize: 16.sp,
+                                                  color: textcolor,
+                                                )),
+                                            buttonColor: maincolor,
+                                            borderRadius: 10.r,
+                                            onPressed: () {
+                                              layoutCubit
+                                                  .createReservation(
+                                                  checkId: index,
+                                                  userData: layoutCubit.userModel!,
+                                                  type: 'First time',
+                                                  time: layoutCubit
+                                                      .datesDay[
+                                                  index],
+                                                  date: DateTime(
+                                                    layoutCubit
+                                                        .checkTime
+                                                        .year,
+                                                    layoutCubit
+                                                        .checkTime
+                                                        .month,
+                                                    layoutCubit
+                                                        .checkTime
+                                                        .day,
+                                                    0, // 5 PM is hour 17 in 24-hour time
+                                                    0,
+                                                    0,
+                                                  ).toString());
+                                            }),
+                                      ),
+                                      Expanded(
+                                          child: CustomButton(
+                                              widget: FittedBox(
+                                                  child: CustomText(
+                                                    text: 'Re-revealed',
                                                     fontSize: 16.sp,
                                                     color: textcolor,
                                                   )),
-                                                  buttonColor: maincolor,
-                                                  borderRadius: 10.r,
-                                                  onPressed: () {
-                                                    layoutCubit
-                                                        .createReservation(
-                                                      userData: layoutCubit.userModel!,
-                                                      type: 'First time',
-                                                            time: layoutCubit
-                                                                    .datesDay[
-                                                                index],
-                                                            date: DateTime(
-                                                              layoutCubit
-                                                                  .checkTime
-                                                                  .year,
-                                                              layoutCubit
-                                                                  .checkTime
-                                                                  .month,
-                                                              layoutCubit
-                                                                  .checkTime
-                                                                  .day,
-                                                              0, // 5 PM is hour 17 in 24-hour time
-                                                              0,
-                                                              0,
-                                                            ).toString());
-                                                  }),
-                                            ),
-                                            Expanded(
-                                                child: CustomButton(
-                                                    widget: FittedBox(
-                                                        child: CustomText(
-                                                      text: 'Re-revealed',
-                                                      fontSize: 16.sp,
-                                                      color: textcolor,
-                                                    )),
-                                                    buttonColor: maincolor,
-                                                    borderRadius: 10.r,
-                                                    onPressed: () {
+                                              buttonColor: maincolor,
+                                              borderRadius: 10.r,
+                                              onPressed: () {
+                                                layoutCubit
+                                                    .createReservation(
+                                                    checkId: index,
+                                                    userData: layoutCubit.userModel!,
+                                                    type: 'Re-revealed',
+                                                    time: layoutCubit
+                                                        .datesDay[
+                                                    index],
+                                                    date: DateTime(
                                                       layoutCubit
-                                                          .createReservation(
-                                                          userData: layoutCubit.userModel!,
-                                                          type: 'Re-revealed',
-                                                              time: layoutCubit
-                                                                      .datesDay[
-                                                                  index],
-                                                              date: DateTime(
-                                                                layoutCubit
-                                                                    .checkTime
-                                                                    .year,
-                                                                layoutCubit
-                                                                    .checkTime
-                                                                    .month,
-                                                                layoutCubit
-                                                                    .checkTime
-                                                                    .day,
-                                                                0, // 5 PM is hour 17 in 24-hour time
-                                                                0,
-                                                                0,
-                                                              ).toString());
-                                                    })),
-                                            Expanded(
-                                                child: CustomButton(
-                                                    widget: FittedBox(
-                                                        child: CustomText(
-                                                      text: 'consultation',
-                                                      fontSize: 16.sp,
-                                                      color: textcolor,
-                                                    )),
-                                                    buttonColor: maincolor,
-                                                    borderRadius: 10.r,
-                                                    onPressed: () {
+                                                          .checkTime
+                                                          .year,
                                                       layoutCubit
-                                                          .createReservation(
-                                                          userData: layoutCubit.userModel!,
-                                                          type: 'consultation',
+                                                          .checkTime
+                                                          .month,
+                                                      layoutCubit
+                                                          .checkTime
+                                                          .day,
+                                                      0, // 5 PM is hour 17 in 24-hour time
+                                                      0,
+                                                      0,
+                                                    ).toString());
+                                              })),
+                                      Expanded(
+                                          child: CustomButton(
+                                              widget: FittedBox(
+                                                  child: CustomText(
+                                                    text: 'consultation',
+                                                    fontSize: 16.sp,
+                                                    color: textcolor,
+                                                  )),
+                                              buttonColor: maincolor,
+                                              borderRadius: 10.r,
+                                              onPressed: () {
+                                                layoutCubit
+                                                    .createReservation(
+                                                    checkId: index,
+                                                    userData: layoutCubit.userModel!,
+                                                    type: 'consultation',
 
-                                                              time: layoutCubit
-                                                                      .datesDay[
-                                                                  index],
-                                                              date: DateTime(
-                                                                layoutCubit
-                                                                    .checkTime
-                                                                    .year,
-                                                                layoutCubit
-                                                                    .checkTime
-                                                                    .month,
-                                                                layoutCubit
-                                                                    .checkTime
-                                                                    .day,
-                                                                0, // 5 PM is hour 17 in 24-hour time
-                                                                0,
-                                                                0,
-                                                              ).toString());
-                                                    })),
-                                          ],
-                                        )
-                                      : Center(
-                                          child: CircularProgressIndicator())
+                                                    time: layoutCubit
+                                                        .datesDay[
+                                                    index],
+                                                    date: DateTime(
+                                                      layoutCubit
+                                                          .checkTime
+                                                          .year,
+                                                      layoutCubit
+                                                          .checkTime
+                                                          .month,
+                                                      layoutCubit
+                                                          .checkTime
+                                                          .day,
+                                                      0, // 5 PM is hour 17 in 24-hour time
+                                                      0,
+                                                      0,
+                                                    ).toString());
+                                              })),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -345,113 +349,116 @@ class _HomeScreenState extends State<HomeScreen>
                                   SizedBox(
                                     height: 10.h,
                                   ),
-                                  state is! CreateReservationLoadingState
-                                      ? Row(
-                                          children: [
-                                            Expanded(
-                                              child: CustomButton(
-                                                  widget: FittedBox(
-                                                      child: CustomText(
-                                                    text: 'First time',
+                                  state is CreateReservationLoadingState && state.checkId ==index
+                                      ? Center(
+                                      child: CircularProgressIndicator())
+                                      : Row(
+                                    children: [
+                                      Expanded(
+                                        child: CustomButton(
+                                            widget: FittedBox(
+                                                child: CustomText(
+                                                  text: 'First time',
+                                                  fontSize: 16.sp,
+                                                  color: textcolor,
+                                                )),
+                                            buttonColor: maincolor,
+                                            borderRadius: 10.r,
+                                            onPressed: () {
+                                              layoutCubit
+                                                  .createReservation(
+                                                  checkId: index,
+                                                  type: 'First time',
+                                                  userData: layoutCubit.userModel!,
+                                                  time: layoutCubit
+                                                      .datesNight[
+                                                  index],
+                                                  date: DateTime(
+                                                    layoutCubit
+                                                        .checkTime
+                                                        .year,
+                                                    layoutCubit
+                                                        .checkTime
+                                                        .month,
+                                                    layoutCubit
+                                                        .checkTime
+                                                        .day,
+                                                    0, // 5 PM is hour 17 in 24-hour time
+                                                    0,
+                                                    0,
+                                                  ).toString());
+                                            }),
+                                      ),
+                                      Expanded(
+                                          child: CustomButton(
+                                              widget: FittedBox(
+                                                  child: CustomText(
+                                                    text: 'Re-revealed',
                                                     fontSize: 16.sp,
                                                     color: textcolor,
                                                   )),
-                                                  buttonColor: maincolor,
-                                                  borderRadius: 10.r,
-                                                  onPressed: () {
-                                                    layoutCubit
-                                                        .createReservation(
-                                                      type: 'First time',
-                                                        userData: layoutCubit.userModel!,
-                                                            time: layoutCubit
-                                                                    .datesNight[
-                                                                index],
-                                                            date: DateTime(
-                                                              layoutCubit
-                                                                  .checkTime
-                                                                  .year,
-                                                              layoutCubit
-                                                                  .checkTime
-                                                                  .month,
-                                                              layoutCubit
-                                                                  .checkTime
-                                                                  .day,
-                                                              0, // 5 PM is hour 17 in 24-hour time
-                                                              0,
-                                                              0,
-                                                            ).toString());
-                                                  }),
-                                            ),
-                                            Expanded(
-                                                child: CustomButton(
-                                                    widget: FittedBox(
-                                                        child: CustomText(
-                                                      text: 'Re-revealed',
-                                                      fontSize: 16.sp,
-                                                      color: textcolor,
-                                                    )),
-                                                    buttonColor: maincolor,
-                                                    borderRadius: 10.r,
-                                                    onPressed: () {
+                                              buttonColor: maincolor,
+                                              borderRadius: 10.r,
+                                              onPressed: () {
+                                                layoutCubit
+                                                    .createReservation(
+                                                    checkId: index,
+                                                    type: 'Re-revealed',
+                                                    userData: layoutCubit.userModel!,
+                                                    time: layoutCubit
+                                                        .datesNight[
+                                                    index],
+                                                    date: DateTime(
                                                       layoutCubit
-                                                          .createReservation(
-                                                        type: 'Re-revealed',
-                                                          userData: layoutCubit.userModel!,
-                                                              time: layoutCubit
-                                                                      .datesNight[
-                                                                  index],
-                                                              date: DateTime(
-                                                                layoutCubit
-                                                                    .checkTime
-                                                                    .year,
-                                                                layoutCubit
-                                                                    .checkTime
-                                                                    .month,
-                                                                layoutCubit
-                                                                    .checkTime
-                                                                    .day,
-                                                                0, // 5 PM is hour 17 in 24-hour time
-                                                                0,
-                                                                0,
-                                                              ).toString());
-                                                    })),
-                                            Expanded(
-                                                child: CustomButton(
-                                                    widget: FittedBox(
-                                                        child: CustomText(
-                                                      text: 'consultation',
-                                                      fontSize: 16.sp,
-                                                      color: textcolor,
-                                                    )),
-                                                    buttonColor: maincolor,
-                                                    borderRadius: 10.r,
-                                                    onPressed: () {
+                                                          .checkTime
+                                                          .year,
                                                       layoutCubit
-                                                          .createReservation(
-                                                        type: 'consultation',
-                                                          userData: layoutCubit.userModel!,
-                                                              time: layoutCubit
-                                                                      .datesNight[
-                                                                  index],
-                                                              date: DateTime(
-                                                                layoutCubit
-                                                                    .checkTime
-                                                                    .year,
-                                                                layoutCubit
-                                                                    .checkTime
-                                                                    .month,
-                                                                layoutCubit
-                                                                    .checkTime
-                                                                    .day,
-                                                                0, // 5 PM is hour 17 in 24-hour time
-                                                                0,
-                                                                0,
-                                                              ).toString());
-                                                    })),
-                                          ],
-                                        )
-                                      : Center(
-                                          child: CircularProgressIndicator())
+                                                          .checkTime
+                                                          .month,
+                                                      layoutCubit
+                                                          .checkTime
+                                                          .day,
+                                                      0, // 5 PM is hour 17 in 24-hour time
+                                                      0,
+                                                      0,
+                                                    ).toString());
+                                              })),
+                                      Expanded(
+                                          child: CustomButton(
+                                              widget: FittedBox(
+                                                  child: CustomText(
+                                                    text: 'consultation',
+                                                    fontSize: 16.sp,
+                                                    color: textcolor,
+                                                  )),
+                                              buttonColor: maincolor,
+                                              borderRadius: 10.r,
+                                              onPressed: () {
+                                                layoutCubit
+                                                    .createReservation(
+                                                    checkId: index,
+                                                    type: 'consultation',
+                                                    userData: layoutCubit.userModel!,
+                                                    time: layoutCubit
+                                                        .datesNight[
+                                                    index],
+                                                    date: DateTime(
+                                                      layoutCubit
+                                                          .checkTime
+                                                          .year,
+                                                      layoutCubit
+                                                          .checkTime
+                                                          .month,
+                                                      layoutCubit
+                                                          .checkTime
+                                                          .day,
+                                                      0, // 5 PM is hour 17 in 24-hour time
+                                                      0,
+                                                      0,
+                                                    ).toString());
+                                              })),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -517,7 +524,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   SizedBox(
                                     height: 10.h,
                                   ),
-                                  CustomButton(
+                              state is DeleteDocLoadingState && state.checkId ==index? CircularProgressIndicator():    CustomButton(
                                       widget: FittedBox(
                                           child: CustomText(
                                         text: 'Cancel Reservation',
@@ -528,7 +535,7 @@ class _HomeScreenState extends State<HomeScreen>
                                       borderRadius: 10.r,
                                       onPressed: ()
                                       {
-                                        layoutCubit.deleteDoc(doc: layoutCubit.reservationModel[index].docId.toString());
+                                        layoutCubit.deleteDoc(checkId: index,doc: layoutCubit.reservationModel[index].docId.toString());
 
 
                                       })
