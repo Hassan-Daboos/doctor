@@ -1,4 +1,3 @@
-import 'package:doctor/viewmodel/database/CacheHelper.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -160,7 +159,6 @@ class LoginScreen extends StatelessWidget {
                               buttonColor: maincolor,
                               borderRadius: 7,
                               onPressed: () {
-                                // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
 
                                 // Authentication.mailSignIn("hassan@gmail.com","H@ssan123");
                                 if (formKey.currentState!.validate()) {
@@ -173,11 +171,7 @@ class LoginScreen extends StatelessWidget {
                         }, listener: (context,state){
                           if(state is UserLoginSuccess)
                           {
-                            CacheHelper.put(key: 'uid', value: state.uid).then((value)
-                            {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
-
-                            });
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
                           }if(state is UserLoginError)
                           {
                             showToast(state.msg);
