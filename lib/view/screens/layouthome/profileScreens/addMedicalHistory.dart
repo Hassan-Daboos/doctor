@@ -7,7 +7,7 @@ import 'package:doctor/view/screens/layouthome/layoutScreen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -221,28 +221,28 @@ class _addMedicalHistoryState extends State<addMedicalHistory> {
                   onTap: () {
                     FocusScope.of(context).requestFocus(new FocusNode());
 
-                    DatePicker.showDatePicker(
-                      context,
-                      currentTime: DateTime.now(),
-                      locale: LocaleType.en,
-                      maxTime: DateTime(2030, 1, 1),
-                      minTime: DateTime(DateTime.now().year, DateTime.now().month,
-                          DateTime.now().day),
-                      onChanged: (data) {
-                        setState(() {
-                          dateTime = "${data.year}/${data.month}/${data.day}";
-                          dateTimeController.text = dateTime;
-                          print(dateTimeController.text);
-                        });
-                      },
-                      onConfirm: (data) {
-                        setState(() {
-                          dateTime = "${data.year}/${data.month}/${data.day}";
-                          dateTimeController.text = dateTime;
-                        });
-                      },
-
-                    );
+                    // DatePicker.showDatePicker(
+                    //   context,
+                    //   currentTime: DateTime.now(),
+                    //   locale: LocaleType.en,
+                    //   maxTime: DateTime(2030, 1, 1),
+                    //   minTime: DateTime(DateTime.now().year, DateTime.now().month,
+                    //       DateTime.now().day),
+                    //   onChanged: (data) {
+                    //     setState(() {
+                    //       dateTime = "${data.year}/${data.month}/${data.day}";
+                    //       dateTimeController.text = dateTime;
+                    //       print(dateTimeController.text);
+                    //     });
+                    //   },
+                    //   onConfirm: (data) {
+                    //     setState(() {
+                    //       dateTime = "${data.year}/${data.month}/${data.day}";
+                    //       dateTimeController.text = dateTime;
+                    //     });
+                    //   },
+                    //
+                    // );
                   },
                   decoration: InputDecoration(
                     hintText: "",

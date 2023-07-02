@@ -107,5 +107,9 @@ class AuthCubit extends Cubit<AuthStates>
       }
     });
   }
-
+  bool isPassword =true;
+  changeEyeIcon(){
+    isPassword =!isPassword;
+    emit(ChangeEyeIcon());
+  }
   }

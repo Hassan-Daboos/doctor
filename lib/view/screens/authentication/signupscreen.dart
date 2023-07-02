@@ -138,8 +138,15 @@ class _SignupScreenState extends State<SignupScreen> {
                                     hintText: "Password",
                                     keyboardType: TextInputType.text,
                                     textInputAction: TextInputAction.next,
-                                    isPassword: true,
-                                    suffixIcon: Icons.remove_red_eye,
+                                    isPassword: authCubit.isPassword,
+                                    // suffixIcon: authCubit.isPassword ?Icons.remove_red_eye:Icons.visibility_off,
+                                    suffixIcon:authCubit.isPassword ? GestureDetector(onTap: ()
+                                    {
+                                      authCubit.changeEyeIcon();
+                                    },child: Icon(Icons.remove_red_eye,color: textcolor,)):GestureDetector(onTap: (){
+                                      authCubit.changeEyeIcon();
+
+                                    },child: Icon(Icons.visibility_off,color: maincolor,)),
                                     suffix: true,
                                     validator: (value) {
                                       if (value!.trim().isEmpty) {

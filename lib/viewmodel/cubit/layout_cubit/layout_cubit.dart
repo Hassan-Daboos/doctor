@@ -65,7 +65,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
   }) {
     emit(CreateMedicalHistoryLoadingState());
     Reference ref =
-        FirebaseStorage.instance.ref('medicalImages').child('$imageName');
+    FirebaseStorage.instance.ref('medicalImages').child('$imageName');
     ref.putFile(file!).then((p0) {
       ref.getDownloadURL().then((value) {
         print(value);
@@ -104,9 +104,9 @@ class LayoutCubit extends Cubit<LayoutStates> {
     await FirebaseFirestore.instance
         .collection('medicalHistory')
         .where(
-          'userId',
-          isEqualTo: FirebaseAuth.instance.currentUser!.uid,
-        )
+      'userId',
+      isEqualTo: FirebaseAuth.instance.currentUser!.uid,
+    )
         .get()
         .then((value) {
       value.docs.forEach((element) {
@@ -252,13 +252,13 @@ class LayoutCubit extends Cubit<LayoutStates> {
 
 
         var dateTime2 = DateTime(
-              checkTime.year,
-              checkTime.month,
-              checkTime.day,
-              0, // 5 PM is hour 17 in 24-hour time
-              0,
-              0,
-            );
+          checkTime.year,
+          checkTime.month,
+          checkTime.day,
+          0, // 5 PM is hour 17 in 24-hour time
+          0,
+          0,
+        );
         var dateTime3 = DateTime(
           checkTime.year,
           checkTime.month,
@@ -272,7 +272,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
         } else if (dateTime.isBefore(dateTime3) &&
             dateTime2.isBefore(dateTime) &&
             !nonReservationModel.any((elementR) =>
-                elementR.time == element.time &&
+            elementR.time == element.time &&
                 elementR.date ==
                     dateTime2.toString())) {
           print('true=========');
@@ -342,14 +342,14 @@ class LayoutCubit extends Cubit<LayoutStates> {
         .collection('checked')
         .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .where('date',
-            isEqualTo: DateTime(
-              checkTime.year,
-              checkTime.month,
-              checkTime.day,
-              0, // 5 PM is hour 17 in 24-hour time
-              0,
-              0,
-            ).toString())
+        isEqualTo: DateTime(
+          checkTime.year,
+          checkTime.month,
+          checkTime.day,
+          0, // 5 PM is hour 17 in 24-hour time
+          0,
+          0,
+        ).toString())
         .get()
         .then((value) async {
       if (value.docs.isNotEmpty) {
@@ -411,14 +411,14 @@ class LayoutCubit extends Cubit<LayoutStates> {
     await FirebaseFirestore.instance
         .collection('checked')
         .where('date',
-            isEqualTo: DateTime(
-              checkTime.year,
-              checkTime.month,
-              checkTime.day,
-              0, // 5 PM is hour 17 in 24-hour time
-              0,
-              0,
-            ).toString())
+        isEqualTo: DateTime(
+          checkTime.year,
+          checkTime.month,
+          checkTime.day,
+          0, // 5 PM is hour 17 in 24-hour time
+          0,
+          0,
+        ).toString())
         .get()
         .then((value) async {
       if (value.docs.isNotEmpty) {

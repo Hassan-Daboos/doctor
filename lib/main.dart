@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
               "PrivacyPolicyScreen": (BuildContext context) =>
                   PrivacyPolicyScreen(),
             },
-            title: 'Student ODC',
+            title: 'احجزلى',
             theme: ThemeData(
               textTheme:
                   GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),

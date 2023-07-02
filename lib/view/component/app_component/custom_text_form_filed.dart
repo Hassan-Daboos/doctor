@@ -5,6 +5,7 @@ import '../../../constant/color_manager.dart';
 // ignore: must_be_immutable
 class TextFormFieldsCustom extends StatefulWidget {
   final String? hintText;
+  final int? MaxLines;
   final String? Function(String?)? validator;
   final Function(String?)? onSaved;
   bool? isPassword;
@@ -16,7 +17,7 @@ class TextFormFieldsCustom extends StatefulWidget {
   final TextEditingController? controller;
   final bool? suffix;
   final bool? suffixToggle;
-  final IconData? suffixIcon;
+  final Widget? suffixIcon;
   final Color? suffixIconColor;
   final IconData? suffixIconToggle;
   final Color? suffixIconColorToggle;
@@ -24,11 +25,14 @@ class TextFormFieldsCustom extends StatefulWidget {
   final FocusNode? focus;
   final Function(String?)? onChanged;
 
+
   TextFormFieldsCustom({
     Key? key,
     this.hintText,
+
     this.validator,
     this.onSaved,
+    this.MaxLines=1,
     this.keyboardType,
     this.helperText,
     this.isPassword = false,
@@ -58,6 +62,7 @@ class _TextFormFieldsCustomState extends State<TextFormFieldsCustom> {
     return TextFormField(
       controller: widget.controller,
       focusNode: widget.focus,
+      maxLines:widget.MaxLines ,
       textInputAction: widget.textInputAction ?? TextInputAction.done,
       onEditingComplete: widget.onEditingComplete,
       onChanged: (value) {
@@ -66,32 +71,12 @@ class _TextFormFieldsCustomState extends State<TextFormFieldsCustom> {
       },
       decoration: InputDecoration(
         fillColor: textFieldBackGround,
+
         filled: true,
         isDense: true,
         hintText: widget.hintText,
         helperText: widget.helperText,
-        suffixIcon: widget.suffix!
-            ? widget.suffixToggle!
-            ? IconButton(
-          focusNode: null,
-          icon: Icon(widget.isPassword!
-              ? widget.suffixIcon
-              : widget.suffixIconToggle),
-          color: widget.isPassword!
-              ? widget.suffixIconColor
-              : widget.suffixIconColorToggle,
-          onPressed: () {
-            //widget.suffixOnPressed!();
-            setState(() {
-              widget.isPassword = !widget.isPassword!;
-            });
-          },
-        )
-            : Icon(
-          widget.suffixIcon,
-          color: widget.suffixIconColor,
-        )
-            : null,
+        suffixIcon: widget.suffixIcon,
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         hintStyle: const TextStyle(
           fontSize: 14,

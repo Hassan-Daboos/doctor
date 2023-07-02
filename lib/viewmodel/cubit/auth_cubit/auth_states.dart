@@ -24,3 +24,4 @@ class UserLoginError extends AuthStates {
 
   UserLoginError(this.msg);
 }
+class ChangeEyeIcon extends AuthStates {}

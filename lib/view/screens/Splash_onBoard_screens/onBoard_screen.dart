@@ -76,7 +76,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                         child: CustomText(
                           text:
                               // onBoardModel[index].title,
-                              'Learn a lot of courses in maincolor Education',
+                              'It is easy to book with us',
                           fontSize: 24,
                           color: Colors.black,
                           textAlign: TextAlign.center,
@@ -91,7 +91,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                         child: CustomText(
                           text:
                               // onBoardModel[index].body,
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+                              'The app helps you book a doctors appointment and schedule appointment  ',
                           fontSize: 13,
                           color: textGray,
                           textAlign: TextAlign.center,
@@ -127,7 +127,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                         child: CustomText(
                           text:
                               // onBoardModel[index].title,
-                              'Learn a lot of courses in maincolor Education',
+                              'We Consider your medical history',
                           fontSize: 24,
                           color: Colors.black,
                           textAlign: TextAlign.center,
@@ -142,7 +142,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                         child: CustomText(
                           text:
                               // onBoardModel[index].body,
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+                              ' ',
                           fontSize: 13,
                           color: textGray,
                           textAlign: TextAlign.center,

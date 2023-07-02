@@ -45,7 +45,7 @@ dependencies:
   carousel_slider:
   google_fonts:
   shimmer:
-  flutter_datetime_picker:
+  flutter_datetime_picker_plus:
   dots_indicator:
   fluttertoast:
   flutter_screenutil: ^5.7.0
