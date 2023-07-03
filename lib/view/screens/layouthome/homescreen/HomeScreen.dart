@@ -4,6 +4,7 @@ import 'package:doctor/view/component/app_component/custom_button.dart';
 import 'package:doctor/viewmodel/cubit/layout_cubit/layout_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -57,28 +58,28 @@ class _HomeScreenState extends State<HomeScreen>
               color: maincolor,
             ),
             onPressed: () {
-              // DatePicker.showDatePicker(
-              //   context,
-              //   currentTime: layoutCubit.checkTime,
-              //   locale: LocaleType.en,
-              //   maxTime: DateTime(2030, 1, 1),
-              //   minTime: DateTime.now(),
-              //
-              //   onChanged: (data) {
-              //     setState(() {
-              //       print(data.weekday.toString());
-              //       layoutCubit.checkTime = data;
-              //       // dateTime = "${data.year}/${data.month}/${data.day}";
-              //       // dateTimeController.text = dateTime;
-              //       // print(dateTimeController.text);
-              //       print(layoutCubit.checkTime);
-              //     });
-              //   },
-              //   onConfirm: (data) {
-              //     layoutCubit.checkTime = data;
-              //     layoutCubit.getReservation();
-              //   },
-              // );
+              DatePicker.showDatePicker(
+                context,
+                currentTime: layoutCubit.checkTime,
+                locale: LocaleType.en,
+                maxTime: DateTime(2030, 1, 1),
+                minTime: DateTime.now(),
+
+                onChanged: (data) {
+                  setState(() {
+                    print(data.weekday.toString());
+                    layoutCubit.checkTime = data;
+                    // dateTime = "${data.year}/${data.month}/${data.day}";
+                    // dateTimeController.text = dateTime;
+                    // print(dateTimeController.text);
+                    print(layoutCubit.checkTime);
+                  });
+                },
+                onConfirm: (data) {
+                  layoutCubit.checkTime = data;
+                  layoutCubit.getReservation();
+                },
+              );
             },
           )
         ],
